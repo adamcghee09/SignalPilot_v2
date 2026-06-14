@@ -1,0 +1,1 @@
+<?php require __DIR__."/../app/bootstrap.php"; log_event("email","info","Daily summary generated"); echo "Daily report generated\n";

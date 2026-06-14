@@ -1,0 +1,2 @@
+<?php
+require __DIR__.'/../app/bootstrap.php'; $raw=file_get_contents('php://input');$data=json_decode($raw,true)?:$_POST;$valid=hash_equals(setting('webhook.secret',''),$data['secret']??($_GET['secret']??''));DB::pdo()->prepare('INSERT INTO webhook_events(source,event_type,payload,valid) VALUES(?,?,?,?)')->execute(['tradingview',$data['event']??'alert',json_encode($data),$valid?1:0]);log_event('webhooks',$valid?'info':'warning','TradingView webhook',['valid'=>$valid]);http_response_code($valid?200:403);echo json_encode(['ok'=>$valid]);

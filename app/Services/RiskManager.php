@@ -1,0 +1,3 @@
+<?php
+namespace App\Services; use DB;
+class RiskManager{public function approve(array $order):array{if(setting('trading.enabled','0')!=='1')return [false,'Trading disabled']; if((float)($order['notional']??0)>(float)setting('trading.max_position_size',1000))return [false,'Max position size exceeded']; $cnt=DB::pdo()->query('SELECT COUNT(*) FROM positions WHERE qty<>0')->fetchColumn(); if($cnt>=(int)setting('trading.max_open_positions',5))return [false,'Max open positions reached']; if(setting('trading.allow_after_hours','0')!=='1'){[$a,$b]=explode('-',setting('trading.market_hours','09:30-16:00'));$n=date('H:i'); if($n<$a||$n>$b)return [false,'Outside market hours'];} return [true,'Approved'];}}

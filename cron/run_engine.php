@@ -1,0 +1,1 @@
+<?php require __DIR__."/../app/bootstrap.php"; $r=(new App\Services\TradingEngine())->run(); print_r($r);
