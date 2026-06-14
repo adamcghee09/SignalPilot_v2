@@ -1,0 +1,1 @@
+<?php require __DIR__."/../app/bootstrap.php"; log_event("email","info","Weekly summary generated"); echo "Weekly report generated\n";

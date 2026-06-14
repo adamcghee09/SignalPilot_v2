@@ -1,0 +1,2 @@
+<?php
+namespace App\Providers; class OpenAIProvider implements AIProviderInterface{public function decide(array $i):array{$price=$i['price']??0;$vwap=$i['vwap']??$price;$d=$price>$vwap?'BUY':($price<$vwap*0.98?'SELL':'WAIT');return ['decision'=>$d,'confidence'=>$d==='WAIT'?55:72,'reasoning'=>'Rule-backed AI provider decision using price/VWAP context; replace with OpenAI API key for remote inference.'];}}

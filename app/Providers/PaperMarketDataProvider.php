@@ -1,0 +1,2 @@
+<?php
+namespace App\Providers; class PaperMarketDataProvider implements MarketDataProviderInterface{public function quote(string $symbol):array{$base=100+(crc32($symbol)%400);return ['symbol'=>$symbol,'price'=>$base+mt_rand(-500,500)/100,'volume'=>mt_rand(100000,5000000),'vwap'=>$base];} public function candles(string $symbol,string $tf='1d',int $limit=50):array{$q=$this->quote($symbol);$a=[];for($i=$limit;$i>0;$i--)$a[]=['t'=>date('c',time()-$i*86400),'o'=>$q['price']-1,'h'=>$q['price']+2,'l'=>$q['price']-2,'c'=>$q['price'],'v'=>$q['volume']];return $a;}}
